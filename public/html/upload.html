@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 500px;
+            height: 300px;
+            margin: 20px auto;
+            border: 2px dashed #ccc;
+            color: #ccc;
+            text-align: center;
+            line-height: 300px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        请将上传文件拖拽到此处
+    </div>
+    <button class="btn">
+        下载文件
+    </button>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).on('dragover', function(ev) {
+            ev.preventDefault();
+        });
+        $('.btn').click(function() {
+            location.href = './download.html';
+        });
+        $(document).on('drop', function(ev) {
+            ev.preventDefault();
+            let files = Array.from(ev.originalEvent.dataTransfer.files);
+            let form = new FormData();
+            files.forEach((item, index) => {
+                form.append(`file${index}`, item);
+            });
+            $.ajax({
+                type: "post",
+                url: "http://localhost:8080/upload",
+                data: form, //上边FormData实例化对象是谁，这里就写啥
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    console.log(res);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

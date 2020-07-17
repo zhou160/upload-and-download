@@ -1,0 +1,8 @@
+
+多行文本超出换行
+
+ display:-webkit-box;
+                        overflow:hidden;
+                        text-overflow:ellipsis;
+                        -webkit-line-clamp:3;
+                        -webkit-box-orient:vertical
